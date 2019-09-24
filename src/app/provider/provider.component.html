@@ -1,1 +1,15 @@
-<p>provider works!</p>
+<h4>Select provider</h4>
+
+<mat-radio-group (change)="setProvider($event)" [value]="provider$ | async">
+  <mat-radio-button *ngFor="let provider of providers" [value]="provider.value">
+    {{provider.viewValue}}
+  </mat-radio-button>
+</mat-radio-group>
+
+<mat-divider></mat-divider>
+
+<button mat-raised-button color="primary" (click)="getItems()">Get items</button>
+
+<div *ngFor="let item of items$ | async">
+  <div>{{item?.name}}</div>
+</div>
