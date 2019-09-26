@@ -17,6 +17,11 @@ export interface ProviderStateModel {
   items: any[];
 }
 
+export const PROVIDER_FIELDS = {
+  countries: ['name', 'region', 'capital', 'population'],
+  wiki: ['name', 'title', 'url']
+};
+
 @State<ProviderStateModel>({
   name: 'provider',
   defaults: {
@@ -29,7 +34,7 @@ export class ProviderState {
 
   @Action(SetProvider)
   setProvider(ctx: StateContext<ProviderStateModel>, action: SetProvider) {
-    ctx.patchState({ provider: action.provider });
+    ctx.patchState({ provider: action.provider, items: [] });
   }
 
   @Action(GetItems)
@@ -44,13 +49,23 @@ export class ProviderState {
   }
 
   private processItems(provider: Provider, items: any) {
+    let data;
     switch (provider) {
       case 'countries':
-        return items.slice(0, ITEMS_COUNT);
+        data = items.slice(0, ITEMS_COUNT);
+        break;
       case 'wiki':
-        return items.query.allimages;
+        data = items.query.allimages;
+        break;
       default:
         throw new Error('Unknown provider');
     }
+    return data.map(item => {
+      return PROVIDER_FIELDS[provider].reduce((acc, field) => {
+        acc[field] = item[field];
+        return acc;
+      }, {});
+    });
   }
+
 }
