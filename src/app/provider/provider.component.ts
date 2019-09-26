@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { GetItems, SetProvider, PROVIDER_FIELDS } from './provider.state';
-import { Observable, of } from 'rxjs';
-import { Provider } from '../providers.config';
+import { Observable } from 'rxjs';
+import { Provider, PROVIDER_FIELDS } from './providers.config';
+import { SetProvider, GetItems, SortItems } from './provider.action';
 
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { Sort } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
 
 export interface ProviderView {
@@ -27,18 +26,17 @@ export class ProviderComponent implements OnInit {
   provider$: Observable<Provider>;
 
   displayedColumns: string[];
-  dataSource = new MatTableDataSource();
+  data: any[];
   selection = new SelectionModel(true, []);
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(private store: Store) {
     this.items$ = this.store.select(state => state.provider.items);
     this.provider$ = this.store.select(state => state.provider.provider);
+    this.items$.subscribe(data => this.data = data);
     this.provider$.subscribe(provider => this.displayedColumns = PROVIDER_FIELDS[provider]);
   }
 
   ngOnInit() {
-    this.dataSource.sort = this.sort;
   }
 
   setProvider(event) {
@@ -47,6 +45,10 @@ export class ProviderComponent implements OnInit {
 
   getItems() {
     this.store.dispatch(new GetItems());
+  }
+
+  sortData(sort: Sort) {
+    this.store.dispatch(new SortItems(sort));
   }
 
 }
