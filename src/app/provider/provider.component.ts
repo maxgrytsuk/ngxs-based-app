@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store, Actions, ofActionCompleted } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Provider, PROVIDER_FIELDS } from './provider.config';
-import { SetProvider, SortItems } from './provider.action';
+import { SetProvider, SortItems, SetIsFavorite } from './provider.action';
 
 import { Sort } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -21,13 +21,13 @@ export class ProviderComponent implements OnInit {
     { value: 'countries', viewValue: 'Countries' },
     { value: 'wiki', viewValue: 'Wiki' },
   ];
-
   isFetching = false;
+  displayedColumns: string[] = ['select'];
+  data: any[];
+
   items$: Observable<any[]>;
   provider$: Observable<Provider>;
 
-  displayedColumns: string[] = ['select'];
-  data: any[];
   selection = new SelectionModel(true, []);
 
   constructor(private store: Store, private actions$: Actions) {
@@ -51,13 +51,18 @@ export class ProviderComponent implements OnInit {
     this.store.dispatch(new SetProvider(event.value));
   }
 
+  sortData(sort: Sort) {
+    this.store.dispatch(new SortItems(sort));
+  }
+
   clean() {
     this.selection.clear();
     this.displayedColumns = ['select'];
   }
 
-  sortData(sort: Sort) {
-    this.store.dispatch(new SortItems(sort));
+  onChangeSelection(row) {
+    this.selection.toggle(row);
+    this.store.dispatch(new SetIsFavorite(row, this.selection.isSelected(row)));
   }
 
   /** Whether the number of selected elements matches the total number of rows. */

@@ -10,6 +10,12 @@ export class SetProvider {
   constructor(public provider: Provider) { }
 }
 
+
+export class SetIsFavorite {
+  static readonly type = '[Provider] SetIsFavorite';
+  constructor(public data: any, public isFavorite: boolean) { }
+}
+
 export class SortItems {
   static readonly type = '[Provider] SortItems';
   constructor(public sort: Sort) { }

@@ -2,7 +2,7 @@ import { State, Action, StateContext } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
 import { AppService } from '../app.service';
 import { Provider, Providers, ITEMS_COUNT, PROVIDER_FIELDS } from './provider.config';
-import { SetProvider, GetItems, SortItems } from './provider.action';
+import { SetProvider, GetItems, SortItems, SetIsFavorite } from './provider.action';
 
 export interface ProviderStateModel {
   provider: Provider;
@@ -34,6 +34,12 @@ export class ProviderState {
         items = this.processItems(provider, items);
         ctx.patchState({ items });
       }));
+  }
+
+  @Action(SetIsFavorite)
+  setIsFavorite(ctx: StateContext<ProviderStateModel>, action: SetIsFavorite) {
+    const state = ctx.getState();
+    return this.appService.setIsFavorite(action.data, action.isFavorite);
   }
 
   @Action(SortItems)
