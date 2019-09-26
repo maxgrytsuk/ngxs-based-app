@@ -35,10 +35,12 @@ export class ProviderState {
   @Action(GetItems)
   getItems(ctx: StateContext<ProviderStateModel>) {
     const state = ctx.getState();
-    return this.appService.getItems(Providers[state.provider]).pipe(tap((items) => {
-      items = this.processItems(state.provider, items);
-      ctx.patchState({ items });
-    }));
+    const provider = state.provider;
+    return this.appService.getItems(Providers[provider]).pipe(
+      tap(items => {
+        items = this.processItems(provider, items);
+        ctx.patchState({ items });
+      }));
   }
 
   private processItems(provider: Provider, items: any) {

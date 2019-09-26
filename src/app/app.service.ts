@@ -13,7 +13,6 @@ export class AppService {
   getItems(apiUrl: string): Observable<any> {
     return this.http.get<any>(apiUrl).pipe(
       tap(data => console.log(data)), // eyeball results in the console
-      // map(items => items.sort(sortByIdDesc)),
       catchError(this.handleError)
     );
   }

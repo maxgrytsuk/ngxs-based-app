@@ -1,17 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { HttpClientModule } from '@angular/common/http';
+import { CustomMaterialModule } from './custom-material.module';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { AppComponent } from './app.component';
 import { ProviderComponent } from './provider/provider.component';
+import { ProviderState } from './provider/provider.state';
 
-import { HttpClientModule } from '@angular/common/http';
-import { ProviderState } from './state/provider.state';
-import { CustomMaterialModule } from './custom-material.module';
 
 
 @NgModule({
