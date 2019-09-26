@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Store, Actions, ofActionSuccessful } from '@ngxs/store';
+import { Component, OnInit } from '@angular/core';
+import { Store, Actions, ofActionCompleted } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Provider, PROVIDER_FIELDS } from './provider.config';
-import { SetProvider, GetItems, SortItems } from './provider.action';
+import { SetProvider, SortItems } from './provider.action';
 
 import { Sort } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -26,28 +26,52 @@ export class ProviderComponent implements OnInit {
   items$: Observable<any[]>;
   provider$: Observable<Provider>;
 
-  displayedColumns: string[];
+  displayedColumns: string[] = ['select'];
   data: any[];
   selection = new SelectionModel(true, []);
 
   constructor(private store: Store, private actions$: Actions) {
-    this.items$ = this.store.select(state => state.provider.items);
-    this.provider$ = this.store.select(state => state.provider.provider);
-    this.items$.subscribe(data => this.data = data);
-    this.provider$.subscribe(provider => this.displayedColumns = PROVIDER_FIELDS[provider]);
   }
 
   ngOnInit() {
-    this.actions$.pipe(ofActionSuccessful(SetProvider)).subscribe(() => this.isFetching = false);
+    this.items$ = this.store.select(state => state.provider.items);
+    this.provider$ = this.store.select(state => state.provider.provider);
+    this.items$.subscribe(data => this.data = data);
+    this.provider$.subscribe(provider => {
+      this.displayedColumns = provider ?
+        this.displayedColumns.concat(PROVIDER_FIELDS[provider]) :
+        this.displayedColumns;
+    });
+    this.actions$.pipe(ofActionCompleted(SetProvider)).subscribe(() => this.isFetching = false);
   }
 
   setProvider(event) {
     this.isFetching = true;
+    this.clean();
     this.store.dispatch(new SetProvider(event.value));
+  }
+
+  clean() {
+    this.selection.clear();
+    this.displayedColumns = ['select'];
   }
 
   sortData(sort: Sort) {
     this.store.dispatch(new SortItems(sort));
+  }
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.data.forEach(row => this.selection.select(row));
   }
 
 }
