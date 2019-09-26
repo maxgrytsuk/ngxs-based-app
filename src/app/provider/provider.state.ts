@@ -1,7 +1,7 @@
 import { State, Action, StateContext } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
 import { AppService } from '../app.service';
-import { Provider, Providers, ITEMS_COUNT, PROVIDER_FIELDS } from './providers.config';
+import { Provider, Providers, ITEMS_COUNT, PROVIDER_FIELDS } from './provider.config';
 import { SetProvider, GetItems, SortItems } from './provider.action';
 
 export interface ProviderStateModel {

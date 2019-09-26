@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Store, Actions, ofActionSuccessful } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { Provider, PROVIDER_FIELDS } from './providers.config';
+import { Provider, PROVIDER_FIELDS } from './provider.config';
 import { SetProvider, GetItems, SortItems } from './provider.action';
 
 import { Sort } from '@angular/material/sort';
