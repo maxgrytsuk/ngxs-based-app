@@ -8,11 +8,10 @@
 
 <mat-divider></mat-divider>
 
-<table *ngIf="(items$ | async).length"
- mat-table matSort 
- [dataSource]="data" 
- (matSortChange)="sortData($event)"
- class="mat-elevation-z8">
+<mat-progress-bar *ngIf="isFetching" mode="indeterminate"></mat-progress-bar>
+
+<table *ngIf="(items$ | async).length" mat-table matSort [dataSource]="data" (matSortChange)="sortData($event)"
+  class="mat-elevation-z8">
 
   <!-- Name Column -->
   <ng-container matColumnDef="name">

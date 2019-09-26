@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Store } from '@ngxs/store';
+import { Store, Actions, ofActionSuccessful } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Provider, PROVIDER_FIELDS } from './providers.config';
 import { SetProvider, GetItems, SortItems } from './provider.action';
@@ -22,6 +22,7 @@ export class ProviderComponent implements OnInit {
     { value: 'wiki', viewValue: 'Wiki' },
   ];
 
+  isFetching = false;
   items$: Observable<any[]>;
   provider$: Observable<Provider>;
 
@@ -29,7 +30,7 @@ export class ProviderComponent implements OnInit {
   data: any[];
   selection = new SelectionModel(true, []);
 
-  constructor(private store: Store) {
+  constructor(private store: Store, private actions$: Actions) {
     this.items$ = this.store.select(state => state.provider.items);
     this.provider$ = this.store.select(state => state.provider.provider);
     this.items$.subscribe(data => this.data = data);
@@ -37,14 +38,12 @@ export class ProviderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.actions$.pipe(ofActionSuccessful(SetProvider)).subscribe(() => this.isFetching = false);
   }
 
   setProvider(event) {
+    this.isFetching = true;
     this.store.dispatch(new SetProvider(event.value));
-  }
-
-  getItems() {
-    this.store.dispatch(new GetItems());
   }
 
   sortData(sort: Sort) {
