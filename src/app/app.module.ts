@@ -11,12 +11,15 @@ import { AppComponent } from './app.component';
 import { ProviderComponent } from './provider/provider.component';
 import { ProviderState } from './provider/state/provider.state';
 import { DataService } from './services/inmemorydb.service';
+import { FavoriteComponent } from './favorite/favorite.component';
+import { FavoriteState } from './favorite/state/favorite.state';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProviderComponent
+    ProviderComponent,
+    FavoriteComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +31,8 @@ import { DataService } from './services/inmemorydb.service';
       passThruUnknownUrl: true
     }),
     NgxsModule.forRoot([
-      ProviderState
+      ProviderState,
+      FavoriteState
     ]),
     NgxsReduxDevtoolsPluginModule.forRoot()
   ],

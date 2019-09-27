@@ -24,6 +24,12 @@ export class AppService {
     );
   }
 
+  setComment(item: any, comment: string): Observable<void> {
+    return this.http.patch<any>('/api/favorites', {...item, comment}).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   setIsFavorite(item: any, isFavorite: boolean): Observable<void> {
     return this.http.post<any>('/api/favorites', item).pipe(
       catchError(this.handleError)
