@@ -1,6 +1,4 @@
-import { InMemoryDbService, RequestInfo } from 'angular-in-memory-web-api';
-import { of } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { InMemoryDbService } from 'angular-in-memory-web-api';
 
 
 export class DataService implements InMemoryDbService {

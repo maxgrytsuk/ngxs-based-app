@@ -4,7 +4,6 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Provider } from './provider.config';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +19,7 @@ export class AppService {
 
   getFavoriteItems(): Observable<any> {
     return this.http.get<any[]>('/api/favorites').pipe(
-      tap(data => console.log(data)), // eyeball results in the console
+      // tap(data => console.log(data)), // eyeball results in the console
       catchError(this.handleError)
     );
   }

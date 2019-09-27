@@ -30,7 +30,7 @@ import { FavoriteState } from './favorite/state/favorite.state';
     BrowserAnimationsModule,
     CustomMaterialModule,
     HttpClientModule,
-    FormsModule,  
+    FormsModule,
     HttpClientInMemoryWebApiModule.forRoot(DataService, {
       passThruUnknownUrl: true
     }),
