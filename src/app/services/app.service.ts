@@ -26,13 +26,19 @@ export class AppService {
   }
 
   setComment(item: any, comment: string): Observable<void> {
-    return this.http.patch<any>('/api/favorites', {...item, comment}).pipe(
+    return this.http.patch<any>('/api/favorites', { ...item, comment }).pipe(
       catchError(this.handleError)
     );
   }
 
   setIsFavorite(item: any, provider: Provider, isFavorite: boolean): Observable<void> {
-    return this.http.post<any>('/api/favorites', {...item, provider, comment: ''}).pipe(
+    let o$;
+    if (isFavorite) {
+      o$ = this.http.post<any>('/api/favorites', { ...item, provider, comment: '' });
+    } else {
+      o$ = this.http.delete<any>(`/api/favorites/${provider}/${item.name}`);
+    }
+    return o$.pipe(
       catchError(this.handleError)
     );
   }
