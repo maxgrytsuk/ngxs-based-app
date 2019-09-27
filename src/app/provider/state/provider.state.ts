@@ -38,7 +38,8 @@ export class ProviderState {
 
   @Action(SetIsFavorite)
   setIsFavorite(ctx: StateContext<ProviderStateModel>, action: SetIsFavorite) {
-    return this.appService.setIsFavorite(action.data, action.isFavorite);
+    const state = ctx.getState();
+    return this.appService.setIsFavorite(action.data, state.provider, action.isFavorite);
   }
 
   @Action(SortItems)

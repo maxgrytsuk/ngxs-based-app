@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { Provider } from './provider.config';
 
 
 @Injectable({
@@ -30,8 +31,8 @@ export class AppService {
     );
   }
 
-  setIsFavorite(item: any, isFavorite: boolean): Observable<void> {
-    return this.http.post<any>('/api/favorites', item).pipe(
+  setIsFavorite(item: any, provider: Provider, isFavorite: boolean): Observable<void> {
+    return this.http.post<any>('/api/favorites', {...item, provider, comment: ''}).pipe(
       catchError(this.handleError)
     );
   }

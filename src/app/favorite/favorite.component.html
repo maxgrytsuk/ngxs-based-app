@@ -1,1 +1,27 @@
-<p>favorite works!</p>
+<mat-progress-bar *ngIf="isFetching" mode="indeterminate"></mat-progress-bar>
+
+<table *ngIf="(items$ | async).length" mat-table [dataSource]="data" class="mat-elevation-z8">
+
+
+    <!-- Provider Column -->
+    <ng-container matColumnDef="provider">
+            <th mat-header-cell *matHeaderCellDef> Provider </th>
+            <td mat-cell *matCellDef="let element"> {{element.provider}} </td>
+        </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <!-- Comment Column -->
+    <ng-container matColumnDef="comment">
+        <th mat-header-cell *matHeaderCellDef> Comment </th>
+        <td mat-cell *matCellDef="let element"> {{element.comment}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+    </tr>
+</table>

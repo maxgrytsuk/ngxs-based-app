@@ -19,11 +19,9 @@ export class FavoriteState {
 
   @Action(GetItems)
   getItems(ctx: StateContext<FavoriteStateModel>) {
-    const state = ctx.getState();
     return this.appService.getFavoriteItems().pipe(
-      tap(items => {
-        ctx.patchState({ items });
-      }));
+      tap(items => ctx.patchState({ items }))
+    );
   }
 
   @Action(SetComment)
