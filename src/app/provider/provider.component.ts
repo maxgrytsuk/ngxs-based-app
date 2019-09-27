@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, Actions, ofActionCompleted } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { Provider, PROVIDER_FIELDS } from './provider.config';
-import { SetProvider, SortItems, SetIsFavorite } from './provider.action';
+import { Provider, PROVIDER_FIELDS } from '../services/provider.config';
+import { SetProvider, SortItems, SetIsFavorite } from './state/provider.action';
 
 import { Sort } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';

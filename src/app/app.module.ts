@@ -9,7 +9,7 @@ import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { AppComponent } from './app.component';
 import { ProviderComponent } from './provider/provider.component';
-import { ProviderState } from './provider/provider.state';
+import { ProviderState } from './provider/state/provider.state';
 import { DataService } from './services/inmemorydb.service';
 
 

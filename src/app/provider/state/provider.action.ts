@@ -1,4 +1,4 @@
-import { Provider } from './provider.config';
+import { Provider } from '../../services/provider.config';
 import { Sort } from '@angular/material/sort';
 
 export class GetItems {
