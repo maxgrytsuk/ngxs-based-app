@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 
 @Injectable({
@@ -17,8 +17,17 @@ export class AppService {
     );
   }
 
-  setIsFavorite(item: any, isFavorite: boolean) {
+  getFavoriteItems(): Observable<any> {
+    return this.http.get<any[]>('/api/favorites').pipe(
+      tap(data => console.log(data)), // eyeball results in the console
+      catchError(this.handleError)
+    );
+  }
 
+  setIsFavorite(item: any, isFavorite: boolean): Observable<void> {
+    return this.http.post<any>('/api/favorites', item).pipe(
+      catchError(this.handleError)
+    );
   }
 
   private handleError(error: any) {

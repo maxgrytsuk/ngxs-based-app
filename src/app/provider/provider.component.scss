@@ -13,9 +13,13 @@ th.mat-sort-header-sorted {
   color: black;
 }
 
-mat-progress-bar {
+.mat-progress-bar {
   margin: 300px auto;
   width: 300px;
+}
+
+.mat-divider {
+  margin-top: 20px;
 }
 
 .mat-column-select {
