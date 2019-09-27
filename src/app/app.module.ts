@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { CustomMaterialModule } from './custom-material.module';
 import { AppRoutingModule } from './app-routing.module';
+import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
@@ -12,6 +13,7 @@ import { ProviderComponent } from './provider/provider.component';
 import { ProviderState } from './provider/state/provider.state';
 import { DataService } from './services/inmemorydb.service';
 import { FavoriteComponent } from './favorite/favorite.component';
+import { CommentDialogComponent } from './favorite/comment/comment.dialog';
 import { FavoriteState } from './favorite/state/favorite.state';
 
 
@@ -19,7 +21,8 @@ import { FavoriteState } from './favorite/state/favorite.state';
   declarations: [
     AppComponent,
     ProviderComponent,
-    FavoriteComponent
+    FavoriteComponent,
+    CommentDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -27,6 +30,7 @@ import { FavoriteState } from './favorite/state/favorite.state';
     BrowserAnimationsModule,
     CustomMaterialModule,
     HttpClientModule,
+    FormsModule,  
     HttpClientInMemoryWebApiModule.forRoot(DataService, {
       passThruUnknownUrl: true
     }),
@@ -36,6 +40,7 @@ import { FavoriteState } from './favorite/state/favorite.state';
     ]),
     NgxsReduxDevtoolsPluginModule.forRoot()
   ],
+  entryComponents: [CommentDialogComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

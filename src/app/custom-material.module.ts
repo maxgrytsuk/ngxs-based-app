@@ -7,6 +7,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -17,7 +20,10 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatSortModule,
     MatTableModule,
     MatCheckboxModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   exports: [
     MatButtonModule,
@@ -26,7 +32,10 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatSortModule,
     MatTableModule,
     MatCheckboxModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
 })
 export class CustomMaterialModule { }

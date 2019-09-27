@@ -26,7 +26,7 @@ export class AppService {
   }
 
   setComment(item: any, comment: string): Observable<void> {
-    return this.http.patch<any>('/api/favorites', { ...item, comment }).pipe(
+    return this.http.put<any>('/api/favorites', { ...item, comment }).pipe(
       catchError(this.handleError)
     );
   }

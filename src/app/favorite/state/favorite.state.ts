@@ -1,11 +1,19 @@
 import { State, Action, StateContext } from '@ngxs/store';
+import { patch, updateItem } from '@ngxs/store/operators';
 import { tap } from 'rxjs/operators';
 import { AppService } from '../../services/app.service';
-import { Provider, Providers, ITEMS_COUNT, PROVIDER_FIELDS } from '../../services/provider.config';
 import { GetItems, SetComment } from './favorite.action';
+import { Provider } from 'src/app/services/provider.config';
 
+
+export interface Favorite {
+  id: number;
+  name: string;
+  provider: Provider;
+  comment: string;
+}
 export interface FavoriteStateModel {
-  items: any[];
+  items: Favorite[];
 }
 
 @State<FavoriteStateModel>({
@@ -26,7 +34,14 @@ export class FavoriteState {
 
   @Action(SetComment)
   setComment(ctx: StateContext<FavoriteStateModel>, action: SetComment) {
-    return this.appService.setComment(action.item, action.comment);
+    return this.appService.setComment(action.item, action.comment).pipe(
+      tap(_ => ctx.setState(
+        patch({
+          items: updateItem<Favorite>(item => item.id === action.item.id,
+            { ...action.item, comment: action.comment })
+        })
+      ))
+    );
   }
 
 }
